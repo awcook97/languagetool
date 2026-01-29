@@ -1,0 +1,7 @@
+This is is a sample text file with with some grammar issues.
+
+I have a apple in my bag. Its raining outside and I need need to go shopping.
+
+There are  multiple  spaces   here that should be fixed.
+
+alot of people make this mistake. Also,remember to add a space after a comma.
