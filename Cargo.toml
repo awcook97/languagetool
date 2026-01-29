@@ -7,6 +7,14 @@ description = "A style and grammar checker - Rust implementation"
 license = "LGPL-2.1-or-later"
 repository = "https://github.com/awcook97/languagetool"
 
+[[bin]]
+name = "languagetool-rs"
+path = "src/main.rs"
+
+[lib]
+name = "languagetool_rs"
+path = "src/lib.rs"
+
 [dependencies]
 regex = "1.11"
 serde = { version = "1.0", features = ["derive"] }

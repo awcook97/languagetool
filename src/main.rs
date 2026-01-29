@@ -1,14 +1,10 @@
-mod token;
-mod rule;
-mod checker;
-
 use clap::Parser;
 use colored::Colorize;
 use std::fs;
 use std::io::{self, Read};
 use std::path::PathBuf;
 
-use checker::LanguageTool;
+use languagetool_rs::LanguageTool;
 
 #[derive(Parser, Debug)]
 #[command(name = "languagetool-rs")]
