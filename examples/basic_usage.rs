@@ -2,7 +2,7 @@ use languagetool_rs::{LanguageTool, RuleMatch};
 
 fn main() {
     // Create a new LanguageTool instance for English
-    let mut lt = LanguageTool::new("en");
+    let lt = LanguageTool::new("en");
     
     println!("LanguageTool Rust - Library API Example");
     println!("========================================\n");
