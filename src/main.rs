@@ -42,15 +42,20 @@ fn main() -> io::Result<()> {
     };
 
     // Create language tool checker
-    let mut lt = LanguageTool::new(&args.language);
+    let lt = LanguageTool::new(&args.language);
 
     // Check the text
     let matches = lt.check(&text);
 
     // Output results
     if args.output == "json" {
-        let json = serde_json::to_string_pretty(&matches).unwrap();
-        println!("{}", json);
+        match serde_json::to_string_pretty(&matches) {
+            Ok(json) => println!("{}", json),
+            Err(e) => {
+                eprintln!("Error serializing to JSON: {}", e);
+                std::process::exit(1);
+            }
+        }
     } else {
         // Text output
         if matches.is_empty() {

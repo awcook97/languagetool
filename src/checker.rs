@@ -44,7 +44,7 @@ impl LanguageTool {
         if let Ok(rule) = PatternRule::new(
             "COMMA_SPACING".to_string(),
             "Checks for missing space after comma".to_string(),
-            r",[^ \n]",
+            r",(?=[a-zA-Z])",
             "Missing space after comma".to_string(),
             vec![],
         ) {
@@ -76,7 +76,7 @@ impl LanguageTool {
         if let Ok(rule) = PatternRule::new(
             "TYPO_ITS_VS_ITS".to_string(),
             "Detects potential confusion between it's and its".to_string(),
-            r"\bits\s+[a-z]+ing\b",
+            r"(?i)\bits\s+(raining|snowing|going|coming|working)\b",
             "Did you mean \"it's\" (it is)?".to_string(),
             vec!["it's".to_string()],
         ) {
@@ -90,7 +90,7 @@ impl LanguageTool {
     }
 
     /// Check the given text and return all matches
-    pub fn check(&mut self, text: &str) -> Vec<RuleMatch> {
+    pub fn check(&self, text: &str) -> Vec<RuleMatch> {
         let tokens = tokenize(text);
         let mut all_matches = Vec::new();
 

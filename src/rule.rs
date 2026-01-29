@@ -76,10 +76,15 @@ impl Rule for PatternRule {
         let mut matches = Vec::new();
 
         for mat in self.pattern.find_iter(text) {
-            // Calculate line and column
+            // Calculate line and column (1-indexed)
             let prefix = &text[..mat.start()];
-            let line = prefix.lines().count();
-            let column = prefix.lines().last().map(|l| l.len() + 1).unwrap_or(1);
+            let line = prefix.lines().count().max(1);
+            let last_line_len = prefix.lines().last().map(|l| l.len()).unwrap_or(0);
+            let column = if prefix.contains('\n') {
+                last_line_len + 1
+            } else {
+                mat.start() + 1
+            };
 
             // Get context (30 chars before and after)
             let context_start = mat.start().saturating_sub(30);
@@ -218,9 +223,14 @@ impl Rule for AvsAnRule {
                     let context = text[context_start..context_end].to_string();
 
                     let correct_article = if should_be_an { "an" } else { "a" };
-                    let suggestion = if current.text.chars().next().unwrap().is_uppercase() {
-                        correct_article.to_string().chars().next().unwrap().to_uppercase().to_string()
-                            + &correct_article[1..]
+                    let suggestion = if current.text.chars().next().map(|c| c.is_uppercase()).unwrap_or(false) {
+                        let mut chars = correct_article.chars();
+                        match chars.next() {
+                            None => correct_article.to_string(),
+                            Some(first) => {
+                                first.to_uppercase().collect::<String>() + chars.as_str()
+                            }
+                        }
                     } else {
                         correct_article.to_string()
                     };

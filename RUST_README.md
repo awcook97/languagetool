@@ -156,7 +156,7 @@ This is a **minimal implementation** demonstrating core concepts. The original J
 This Rust version provides:
 
 - Single language (English)
-- ~10 basic rules
+- 7 basic rules
 - Command-line interface
 - Fast performance
 - Simple architecture
